@@ -8,6 +8,7 @@ import { Employee } from 'src/screens/app/Employee';
 import { Manager } from 'src/screens/app/Manager';
 import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { AuthorizedEmployee } from 'src/screens/app/AuthorizedEmployee';
+import { UpdateProfile } from 'src/screens/app/UpdateProfile';
 
 export type AppStackParamList = {
   Home: undefined;
@@ -61,6 +62,7 @@ export const AppNavigator: React.FC = () => {
     <Stack.Navigator>
       {completeProfileCheck()}
       <Stack.Screen name="AuthorizedEmployee" component={AuthorizedEmployee} />
+      <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
     </Stack.Navigator>
   );
 };

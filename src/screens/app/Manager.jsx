@@ -24,7 +24,10 @@ export const Manager = ({ navigation }) => {
   return (
     <Box style={styles.container}>
       <ManagerHome navigation={navigation} isActive={activeTab === 'Home'} />
-      <SettingsPage isActive={activeTab === 'Settings'} />
+      <SettingsPage
+        navigation={navigation}
+        isActive={activeTab === 'Settings'}
+      />
       <MobileBottomTabs
         bottomTabs={bottomTabs}
         activeTab={activeTab}

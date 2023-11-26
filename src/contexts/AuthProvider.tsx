@@ -14,7 +14,12 @@ interface AuthContextProps {
   ) => Promise<void>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<void>;
   updateCurrentUser: (
-    fields: Partial<Omit<UserProfile, 'id' | 'email'>>,
+    fields: Partial<Omit<UserProfile, 'id' | 'email' | 'authorized'>>,
+  ) => void;
+  updateUser: (
+    fields: Partial<
+      Omit<UserProfile, 'id' | 'email' | 'authorized' | 'role' | 'firm'>
+    >,
   ) => void;
   logout: () => void;
 }
@@ -59,10 +64,19 @@ export const AuthProvider: React.FC = ({ children }: any) => {
   };
 
   const updateCurrentUser = async (
-    fields: Partial<Omit<UserProfile, 'id' | 'email'>>,
+    fields: Partial<Omit<UserProfile, 'id' | 'email' | 'authorized'>>,
   ) => {
     setCurrentUser(prevUser => (prevUser ? { ...prevUser, ...fields } : null));
   };
+
+  const updateUser = async (
+    fields: Partial<
+      Omit<UserProfile, 'id' | 'email' | 'authorized' | 'role' | 'firm'>
+    >,
+  ) => {
+    setCurrentUser(prevUser => (prevUser ? { ...prevUser, ...fields } : null));
+  };
+
   const registerWithEmailAndPassword = async (
     email: string,
     password: string,
@@ -117,6 +131,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         registerWithEmailAndPassword,
         loginWithEmailAndPassword,
         updateCurrentUser,
+        updateUser,
         logout,
       }}>
       {children}
