@@ -21,7 +21,7 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC = ({ children }: any) => {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const { execute, error } = useSupabaseMutation();
@@ -75,7 +75,7 @@ export const AuthProvider: React.FC = ({ children }) => {
           password,
         }),
       );
-    } catch (error) {
+    } catch (error: any) {
       Alert.alert(error.message);
       console.log(`Error Caught While Signing Up`);
     } finally {
