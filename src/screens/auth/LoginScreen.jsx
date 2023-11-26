@@ -1,6 +1,6 @@
-import { React, useState } from 'react';
+import { React, useState, useCallback } from 'react';
 import { useAuth } from 'src/contexts/AuthProvider';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, RefreshControl, Alert } from 'react-native';
 
 import {
   Box,
@@ -25,12 +25,19 @@ import {
 export const LoginScreen = () => {
   const { loginWithEmailAndPassword, registerWithEmailAndPassword, loading } =
     useAuth();
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+      console.log(`loading: ${loading}`);
+    }, 2000);
+  }, []);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [signup, setSignUp] = useState(false);
-  const [errorOccur, setErrorOccur] = useState(undefined);
 
   const handleFragment = flag => {
     if (flag) {
@@ -49,35 +56,18 @@ export const LoginScreen = () => {
   };
 
   const handleSignUp = () => {
-    try {
-      registerWithEmailAndPassword(email, password);
-    } catch (error) {
-      setErrorOccur(error);
-    }
+    registerWithEmailAndPassword(email, password);
   };
 
   const handleLogin = () => {
-    try {
-      loginWithEmailAndPassword(email, password);
-    } catch (error) {
-      console.log(error);
-      setErrorOccur(error);
-    }
+    loginWithEmailAndPassword(email, password);
   };
 
-  const SignUpFragment = signup => {
+  const SignUpFragment = () => {
     if (loading) {
       return <Spinner mt="$25" size="large" />;
     }
-    if (errorOccur) {
-      return (
-        <Box>
-          <Text color="red.500" textAlign="center">
-            {errorOccur.message}
-          </Text>
-        </Box>
-      );
-    }
+
     if (signup) {
       return (
         <ScrollView h="$80" w="$72">
@@ -210,8 +200,17 @@ export const LoginScreen = () => {
 
   return (
     <Box style={styles.container}>
-      <Image alt="Logo" size={'2xl'} source={require('src/assets/logo.png')} />
-      <Box style={styles.signup}>{SignUpFragment(signup)}</Box>
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
+        <Image
+          alt="Logo"
+          size={'2xl'}
+          source={require('src/assets/logo.png')}
+        />
+        <Box style={styles.signup}>{SignUpFragment()}</Box>
+      </ScrollView>
     </Box>
   );
 };

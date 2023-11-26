@@ -63,28 +63,41 @@ export const AuthProvider: React.FC = ({ children }) => {
   ) => {
     setCurrentUser(prevUser => (prevUser ? { ...prevUser, ...fields } : null));
   };
-
   const registerWithEmailAndPassword = async (
     email: string,
     password: string,
   ) => {
     setLoading(true);
-    execute(
-      supabase.auth.signUp({
-        email,
-        password,
-      }),
-    );
+    try {
+      await execute(
+        supabase.auth.signUp({
+          email,
+          password,
+        }),
+      );
+    } catch (error) {
+      Alert.alert(error.message);
+      console.log(`Error Caught While Signing Up`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const loginWithEmailAndPassword = async (email: string, password: string) => {
     setLoading(true);
-    execute(
-      supabase.auth.signIn({
-        email,
-        password,
-      }),
-    );
+    try {
+      await execute(
+        supabase.auth.signIn({
+          email,
+          password,
+        }),
+      );
+    } catch (error) {
+      // Alert.alert(error.message);
+      console.log(`Error Caught ${error}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = async () => {
@@ -93,7 +106,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   };
 
   if (error) {
-    Alert.alert(error.message);
+    // Alert.alert(error.message);
   }
 
   return (

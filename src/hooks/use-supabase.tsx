@@ -66,9 +66,7 @@ export const useSupabaseMutation = () => {
           loading: false,
           error: error as Error,
         }));
-        Alert.alert('An error occured', error.message);
       }
-      console.error(error);
     }
   };
 

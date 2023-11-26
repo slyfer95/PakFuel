@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth, useCurrentUser } from 'src/contexts/AuthProvider';
 import { StyleSheet, View } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
@@ -15,7 +14,7 @@ import { ScanLine } from 'lucide-react-native';
 
 export const Scanner = ({ isActive }) => {
   const [loading, setLoading] = React.useState(true);
-  const [startScanning, setStartScanning] = React.useState(false);
+  const [startScanning, setStartScanning] = React.useState(isActive);
   const [scanData, setScanData] = React.useState(null);
   const [permission, setPermission] = React.useState(true);
 
@@ -111,11 +110,7 @@ export const Scanner = ({ isActive }) => {
     }
   };
 
-  return (
-    <Box style={[{ display: isActive ? 'flex' : 'none' }, styles.container]}>
-      {ScannerFragment()}
-    </Box>
-  );
+  return <Box style={styles.container}>{ScannerFragment()}</Box>;
 };
 
 const styles = StyleSheet.create({
@@ -128,7 +123,6 @@ const styles = StyleSheet.create({
     marginLeft: '4%',
   },
   scan: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },

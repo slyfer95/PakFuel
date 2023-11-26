@@ -1,27 +1,13 @@
 import React from 'react';
-import { useAuth, useCurrentUser } from 'src/contexts/AuthProvider';
 import { StyleSheet, View } from 'react-native';
 import { MobileBottomTabs } from './MobileBottomTabs';
 import { EmployeeHome } from './EmployeeHome';
 import { SettingsPage } from './SettingsPage';
 
-import {
-  Box,
-  Button,
-  ButtonText,
-  ScrollView,
-  Text,
-  Heading,
-  HStack,
-  Icon,
-  Pressable,
-  VStack,
-} from '@gluestack-ui/themed';
-import { ScanLine, Home, Settings } from 'lucide-react-native';
+import { Box } from '@gluestack-ui/themed';
+import { Home, Settings } from 'lucide-react-native';
 
 export const Employee = ({ navigation }) => {
-  const user = useCurrentUser();
-
   const [activeTab, setActiveTab] = React.useState('Home');
 
   const bottomTabs = [
