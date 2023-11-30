@@ -2,19 +2,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import {
-  Box,
-  Button,
-  ButtonText,
-  Text,
-  Icon,
-  Pressable,
-} from '@gluestack-ui/themed';
-import { ScanLine } from 'lucide-react-native';
+import { Box, Button, ButtonText, Text, Icon } from '@gluestack-ui/themed';
+import { Scan } from 'lucide-react-native';
 
-export const Scanner = ({ isActive }) => {
+export const Scanner = () => {
   const [loading, setLoading] = React.useState(true);
-  const [startScanning, setStartScanning] = React.useState(isActive);
   const [scanData, setScanData] = React.useState(null);
   const [permission, setPermission] = React.useState(true);
 
@@ -67,43 +59,23 @@ export const Scanner = ({ isActive }) => {
       );
     }
 
-    if (permission && startScanning) {
+    if (permission) {
       return (
-        <BarCodeScanner
-          style={styles.container}
-          onBarCodeScanned={({ type, data }) => {
-            try {
-              console.log(type);
-              console.log(data);
-              setScanData(data);
-            } catch (error) {
-              console.log(error);
-            }
-          }}></BarCodeScanner>
-      );
-    }
-
-    if (permission && !startScanning) {
-      return (
-        <Pressable
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-          onPress={() => {
-            setStartScanning(true);
-          }}>
-          <Icon as={ScanLine} size={200} />
-          <Button
-            size="md"
-            w="$72"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}
-            onPress={() => {
-              setStartScanning(true);
+        <>
+          <BarCodeScanner
+            style={styles.container}
+            onBarCodeScanned={({ type, data }) => {
+              try {
+                console.log(type);
+                console.log(data);
+                setScanData(data);
+              } catch (error) {
+                console.log(error);
+              }
             }}>
-            <ButtonText>Scan QR Code</ButtonText>
-          </Button>
-        </Pressable>
+            <Icon as={Scan} size={250} />
+          </BarCodeScanner>
+        </>
       );
     } else {
       return <Text>User is not Authorized Yet!</Text>;
@@ -118,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     justifyContent: 'center',
+    alignItems: 'center',
   },
   welcome: {
     marginLeft: '4%',

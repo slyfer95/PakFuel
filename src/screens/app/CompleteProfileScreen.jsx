@@ -165,7 +165,7 @@ export const CompleteProfileScreen = ({ navigation }) => {
                 </FormControlLabel>
                 <Input>
                   <InputField
-                    type="number"
+                    keyboardType="numeric"
                     onChangeText={text => setCnicNumber(text)}
                     placeholder="xxxxxxxxxxxxxxxx"
                   />

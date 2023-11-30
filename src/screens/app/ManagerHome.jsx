@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth, useCurrentUser } from 'src/contexts/AuthProvider';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 
 import {
   Box,

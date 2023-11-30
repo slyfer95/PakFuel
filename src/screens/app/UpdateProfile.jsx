@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
-import { useAuth, useCurrentUser, updateUser } from 'src/contexts/AuthProvider';
+import { useAuth, useCurrentUser } from 'src/contexts/AuthProvider';
 import { supabase } from 'src/services/supabaseClient';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Alert } from 'react-native';
 
 import {
   Box,
@@ -17,29 +17,9 @@ import {
   Divider,
   ScrollView,
   Text,
-  Link,
-  LinkText,
   Heading,
   Spinner,
-  Select,
-  SelectTrigger,
-  SelectInput,
-  SelectPortal,
-  SelectBackdrop,
-  SelectContent,
-  SelectDragIndicatorWrapper,
-  SelectDragIndicator,
-  SelectItem,
-  SelectIcon,
-  Icon,
-  Radio,
-  RadioGroup,
-  RadioIndicator,
-  RadioIcon,
-  CircleIcon,
-  RadioLabel,
 } from '@gluestack-ui/themed';
-import { ChevronDownIcon } from 'lucide-react-native';
 
 export const UpdateProfile = ({ navigation }) => {
   const user = useCurrentUser();
@@ -47,23 +27,11 @@ export const UpdateProfile = ({ navigation }) => {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [cnic, setCnicNumber] = useState('0');
-  const [role, setRole] = useState('');
-  const [firm, setFirm] = useState('');
-  const [error, setError] = useState(undefined);
 
   const [profile, setProfile] = useState(user.cnic === '0' ? false : true);
 
   const handleFragment = flag => {
-    console.log(profile);
     setProfile(!flag);
-  };
-
-  const handleSelectChange = value => {
-    setFirm(value);
-  };
-
-  const handleRadioChange = value => {
-    setRole(value);
   };
 
   const handleComplete = async () => {
@@ -76,21 +44,18 @@ export const UpdateProfile = ({ navigation }) => {
         setError(error);
       } else {
         handleFragment(profile);
-        Alert.alert('Profile Updated');
+        Alert.alert(`Profile Updated!`);
         navigation.goBack();
       }
     } catch (error) {
-      console.log(error);
-      setError(error);
+      Alert.alert(`Error: ${error}`);
+      navigation.goBack();
     }
   };
 
   const CompleteProfileFragment = profile => {
     if (loading) {
       return <Spinner size="large" />;
-    }
-    if (error) {
-      return <Text>Error: {error.message}</Text>;
     } else {
       return (
         <ScrollView h="$80" w="$72">
@@ -154,7 +119,7 @@ export const UpdateProfile = ({ navigation }) => {
                 </FormControlLabel>
                 <Input>
                   <InputField
-                    type="number"
+                    keyboardType="numeric"
                     onChangeText={text => setCnicNumber(text)}
                     placeholder="xxxxxxxxxxxxxxxx"
                   />

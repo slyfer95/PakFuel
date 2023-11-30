@@ -23,7 +23,7 @@ export const Employee = ({ navigation }) => {
   return (
     <Box style={styles.container}>
       <Box style={styles.scan}>
-        <EmployeeHome isActive={activeTab === 'Home'} />
+        <EmployeeHome isActive={activeTab === 'Home'} navigation={navigation} />
         <SettingsPage
           navigation={navigation}
           isActive={activeTab === 'Settings'}

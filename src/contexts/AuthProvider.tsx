@@ -14,13 +14,9 @@ interface AuthContextProps {
   ) => Promise<void>;
   loginWithEmailAndPassword: (email: string, password: string) => Promise<void>;
   updateCurrentUser: (
-    fields: Partial<Omit<UserProfile, 'id' | 'email' | 'authorized'>>,
+    fields: Partial<Omit<UserProfile, 'id' | 'email'>>,
   ) => void;
-  updateUser: (
-    fields: Partial<
-      Omit<UserProfile, 'id' | 'email' | 'authorized' | 'role' | 'firm'>
-    >,
-  ) => void;
+
   logout: () => void;
 }
 
@@ -64,15 +60,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
   };
 
   const updateCurrentUser = async (
-    fields: Partial<Omit<UserProfile, 'id' | 'email' | 'authorized'>>,
-  ) => {
-    setCurrentUser(prevUser => (prevUser ? { ...prevUser, ...fields } : null));
-  };
-
-  const updateUser = async (
-    fields: Partial<
-      Omit<UserProfile, 'id' | 'email' | 'authorized' | 'role' | 'firm'>
-    >,
+    fields: Partial<Omit<UserProfile, 'id' | 'email'>>,
   ) => {
     setCurrentUser(prevUser => (prevUser ? { ...prevUser, ...fields } : null));
   };
@@ -90,7 +78,6 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         }),
       );
     } catch (error: any) {
-      Alert.alert(error.message);
       console.log(`Error Caught While Signing Up`);
     } finally {
       setLoading(false);
@@ -107,7 +94,6 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         }),
       );
     } catch (error) {
-      // Alert.alert(error.message);
       console.log(`Error Caught ${error}`);
     } finally {
       setLoading(false);
@@ -120,7 +106,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
   };
 
   if (error) {
-    // Alert.alert(error.message);
+    Alert.alert(error.message);
   }
 
   return (
@@ -131,7 +117,6 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         registerWithEmailAndPassword,
         loginWithEmailAndPassword,
         updateCurrentUser,
-        updateUser,
         logout,
       }}>
       {children}
@@ -145,7 +130,6 @@ export const useAuth = (): AuthContextProps => {
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-
   return context;
 };
 

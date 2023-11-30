@@ -47,20 +47,20 @@ export const LoginScreen = () => {
     }
   };
 
-  const handleSelectChange = value => {
-    setFirm(value);
+  const handleSignUp = async () => {
+    try {
+      registerWithEmailAndPassword(email, password);
+    } catch (error) {
+      Alert.alert(`Error: ${error}`);
+    }
   };
 
-  const handleRadioChange = value => {
-    setRole(value);
-  };
-
-  const handleSignUp = () => {
-    registerWithEmailAndPassword(email, password);
-  };
-
-  const handleLogin = () => {
-    loginWithEmailAndPassword(email, password);
+  const handleLogin = async () => {
+    try {
+      await loginWithEmailAndPassword(email, password);
+    } catch (error) {
+      Alert.alert(`Error: ${error}`);
+    }
   };
 
   const SignUpFragment = () => {
