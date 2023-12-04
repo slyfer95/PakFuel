@@ -1,7 +1,7 @@
 import React from 'react';
 import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { StyleSheet, RefreshControl, ScrollView } from 'react-native';
-import { Scanner } from 'src/screens/app/Scanner';
+import { Scanner } from 'src/screens/app/EmployeeScreens/Scanner';
 
 import {
   Box,

@@ -4,12 +4,14 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import { CompleteProfileScreen } from 'src/screens/app/CompleteProfileScreen';
-import { Employee } from 'src/screens/app/Employee';
-import { Manager } from 'src/screens/app/Manager';
+import { Employee } from 'src/screens/app/EmployeeScreens/Employee';
+import { Manager } from 'src/screens/app/ManagerScreens/Manager';
 import { useCurrentUser } from 'src/contexts/AuthProvider';
-import { AuthorizedEmployee } from 'src/screens/app/AuthorizedEmployee';
+import { AuthorizedEmployee } from 'src/screens/app/ManagerScreens/AuthorizedEmployee';
+import { AuthorizeNewEmployees } from 'src/screens/app/ManagerScreens/AuthorizeNewEmployees';
+import { DeleteEmployee } from 'src/screens/app/ManagerScreens/DeleteEmployee';
 import { UpdateProfile } from 'src/screens/app/UpdateProfile';
-import { Scanner } from 'src/screens/app/Scanner';
+import { Scanner } from 'src/screens/app/EmployeeScreens/Scanner';
 
 export type AppStackParamList = {
   Home: undefined;
@@ -63,8 +65,13 @@ export const AppNavigator: React.FC = () => {
     <Stack.Navigator>
       {completeProfileCheck()}
       <Stack.Screen name="AuthorizedEmployee" component={AuthorizedEmployee} />
+      <Stack.Screen
+        name="AuthorizeNewEmployees"
+        component={AuthorizeNewEmployees}
+      />
       <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
       <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen name="DeleteEmployee" component={DeleteEmployee} />
     </Stack.Navigator>
   );
 };

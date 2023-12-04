@@ -1,8 +1,8 @@
 import React from 'react';
-import { MobileBottomTabs } from './MobileBottomTabs';
-import { useCurrentUser } from 'src/contexts/AuthProvider';
-import { SettingsPage } from './SettingsPage';
-import { ManagerHome } from './ManagerHome';
+import { MobileBottomTabs } from '../MobileBottomTabs';
+// import { useCurrentUser } from 'src/contexts/AuthProvider';
+import { SettingsPage } from '../SettingsPage';
+import { ManagerHome } from '../ManagerScreens/ManagerHome';
 import { StyleSheet } from 'react-native';
 import { Box } from '@gluestack-ui/themed';
 import { Home, Settings } from 'lucide-react-native';

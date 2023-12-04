@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { MobileBottomTabs } from './MobileBottomTabs';
-import { EmployeeHome } from './EmployeeHome';
-import { SettingsPage } from './SettingsPage';
+import { MobileBottomTabs } from '../MobileBottomTabs';
+import { EmployeeHome } from '../EmployeeScreens/EmployeeHome';
+import { SettingsPage } from '../SettingsPage';
 
 import { Box } from '@gluestack-ui/themed';
 import { Home, Settings } from 'lucide-react-native';
