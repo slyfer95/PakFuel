@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { supabase } from 'src/services/supabaseClient';
 import {
   Box,
@@ -24,6 +25,7 @@ import {
 import { Trash2, CloseIcon } from 'lucide-react-native';
 
 export const DeleteEmployee = () => {
+  const user = useCurrentUser();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [authorizeEmployeeList, setAuthorizeEmployeeList] =
@@ -39,7 +41,9 @@ export const DeleteEmployee = () => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
+      .eq('firm', user.firm)
       .eq('authorized', 'true');
+
     if (error) {
       setLoading(false);
       setError(true);

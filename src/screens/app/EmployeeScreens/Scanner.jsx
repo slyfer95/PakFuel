@@ -2,13 +2,29 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import { Box, Button, ButtonText, Text, Icon } from '@gluestack-ui/themed';
+import {
+  Box,
+  Text,
+  Icon,
+  Modal,
+  ModalBackdrop,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  Heading,
+  ButtonText,
+  ModalHeader,
+  Button,
+} from '@gluestack-ui/themed';
 import { Scan } from 'lucide-react-native';
 
 export const Scanner = () => {
   const [loading, setLoading] = React.useState(true);
   const [scanData, setScanData] = React.useState(null);
   const [permission, setPermission] = React.useState(true);
+  const [confirmation, setConfirmation] = React.useState(undefined);
+  const [showModal, setShowModal] = React.useState(false);
+  const ref = React.useRef(null);
 
   React.useEffect(() => {
     requestCameraPermission();
@@ -38,10 +54,10 @@ export const Scanner = () => {
       return (
         <Text alignContent="center">Requesting for camera permission</Text>
       );
-    if (scanData) {
+    if (confirmation) {
       return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <Text>{scanData}</Text>
+          <Text>{confirmation}</Text>
           <Button
             size="md"
             w="$72"
@@ -51,6 +67,7 @@ export const Scanner = () => {
             isDisabled={false}
             isFocusVisible={false}
             onPress={() => {
+              setConfirmation(undefined);
               setScanData(undefined);
             }}>
             <ButtonText>Scan Again</ButtonText>
@@ -62,12 +79,14 @@ export const Scanner = () => {
     if (permission) {
       return (
         <>
+          <Text>Place the QR Code within this Marker.</Text>
           <BarCodeScanner
             style={styles.container}
             onBarCodeScanned={({ type, data }) => {
               try {
                 console.log(type);
                 console.log(data);
+                setShowModal(true);
                 setScanData(data);
               } catch (error) {
                 console.log(error);
@@ -82,7 +101,50 @@ export const Scanner = () => {
     }
   };
 
-  return <Box style={styles.container}>{ScannerFragment()}</Box>;
+  return (
+    <Box style={styles.container}>
+      {ScannerFragment()}
+      <Modal
+        isOpen={showModal}
+        onClose={() => {
+          setShowModal(false);
+        }}
+        finalFocusRef={ref}>
+        <ModalBackdrop />
+        <ModalContent>
+          <ModalHeader>
+            <Heading size="lg">Confirm Transaction</Heading>
+          </ModalHeader>
+          <ModalBody>
+            <Text>Confirm this transaction.</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              variant="outline"
+              size="sm"
+              action="secondary"
+              mr="$3"
+              onPress={() => {
+                setConfirmation('Transaction Cancelled.');
+                setShowModal(false);
+              }}>
+              <ButtonText>Cancel</ButtonText>
+            </Button>
+            <Button
+              size="sm"
+              action="positive"
+              borderWidth="$0"
+              onPress={() => {
+                setConfirmation('Transaction Confirmed.');
+                setShowModal(false);
+              }}>
+              <ButtonText>Confirm</ButtonText>
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Box>
+  );
 };
 
 const styles = StyleSheet.create({

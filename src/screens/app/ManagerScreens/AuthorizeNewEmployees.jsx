@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
+import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { supabase } from 'src/services/supabaseClient';
 import {
   Box,
@@ -11,6 +12,7 @@ import {
 } from '@gluestack-ui/themed';
 
 export const AuthorizeNewEmployees = () => {
+  const user = useCurrentUser();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [authorizeEmployeeList, setAuthorizeEmployeeList] =
@@ -23,6 +25,7 @@ export const AuthorizeNewEmployees = () => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
+      .eq('firm', user.firm)
       .eq('authorized', 'false');
     if (error) {
       setLoading(false);

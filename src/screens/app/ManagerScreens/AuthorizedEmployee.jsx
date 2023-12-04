@@ -6,6 +6,7 @@ import { Box, Text, Spinner } from '@gluestack-ui/themed';
 import { FlatListAuthorized } from 'src/components/atoms/FlatListAuthorized';
 
 export const AuthorizedEmployee = () => {
+  const user = useCurrentUser();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
   const [authorizedEmployeeList, setAuthorizedEmployeeList] =
@@ -18,7 +19,8 @@ export const AuthorizedEmployee = () => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
-      .eq('authorized', 'true');
+      .eq('authorized', 'true')
+      .eq('firm', user.firm);
     if (error) {
       setLoading(false);
       setError(true);

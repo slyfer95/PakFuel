@@ -6,6 +6,7 @@ import {
 import { CompleteProfileScreen } from 'src/screens/app/CompleteProfileScreen';
 import { Employee } from 'src/screens/app/EmployeeScreens/Employee';
 import { Manager } from 'src/screens/app/ManagerScreens/Manager';
+import { Admin } from 'src/screens/app/AdminScreens/Admin';
 import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { AuthorizedEmployee } from 'src/screens/app/ManagerScreens/AuthorizedEmployee';
 import { AuthorizeNewEmployees } from 'src/screens/app/ManagerScreens/AuthorizeNewEmployees';
@@ -41,6 +42,16 @@ const completeProfileCheck = () => {
         <Stack.Screen
           name={'Manager'}
           component={Manager}
+          options={{
+            headerShown: false,
+          }}
+        />
+      );
+    } else if (user.role === 'admin') {
+      return (
+        <Stack.Screen
+          name={'Admin'}
+          component={Admin}
           options={{
             headerShown: false,
           }}
