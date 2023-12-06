@@ -9,7 +9,6 @@ import {
   HStack,
   Icon,
   Pressable,
-  Image,
   VStack,
 } from '@gluestack-ui/themed';
 import {
@@ -18,17 +17,18 @@ import {
   UserX,
   Plus,
   Pencil,
+  Home,
   Settings,
   Trash,
   X,
 } from 'lucide-react-native';
 
-export const ManagerHome = ({ isActive, navigation }) => {
+export const AdminHome = ({ isActive, navigation }) => {
   const user = useCurrentUser();
   return (
     <Box style={[{ display: isActive ? 'flex' : 'none' }, styles.container]}>
       <Heading>Hello {user.first_name}!</Heading>
-      <Text>Welcome to Manager's Home Screen</Text>
+      <Text>Welcome to Admin's Home Screen</Text>
       <VStack style={styles.vstack}>
         <Box
           style={{
@@ -107,18 +107,6 @@ export const ManagerHome = ({ isActive, navigation }) => {
             </Pressable>
           </HStack>
         </Box>
-        <Pressable
-          onPress={() => {
-            navigation.navigate('TransactionHistory');
-          }}>
-          <Image
-            alt="Line Chart"
-            m="$3"
-            w="95%"
-            size={'xl'}
-            source={require('src/assets/linechart.jpg')}
-          />
-        </Pressable>
       </VStack>
     </Box>
   );

@@ -13,6 +13,7 @@ import { AuthorizeNewEmployees } from 'src/screens/app/ManagerScreens/AuthorizeN
 import { DeleteEmployee } from 'src/screens/app/ManagerScreens/DeleteEmployee';
 import { UpdateProfile } from 'src/screens/app/UpdateProfile';
 import { Scanner } from 'src/screens/app/EmployeeScreens/Scanner';
+import { TransactionHistory } from 'src/components/atoms/TransactionHistory';
 
 export type AppStackParamList = {
   Home: undefined;
@@ -82,6 +83,7 @@ export const AppNavigator: React.FC = () => {
       />
       <Stack.Screen name="UpdateProfile" component={UpdateProfile} />
       <Stack.Screen name="Scanner" component={Scanner} />
+      <Stack.Screen name="TransactionHistory" component={TransactionHistory} />
       <Stack.Screen name="DeleteEmployee" component={DeleteEmployee} />
     </Stack.Navigator>
   );

@@ -116,7 +116,6 @@ export const CompleteProfileScreen = ({ navigation }) => {
             <Box w="$72">
               <FormControl
                 size="md"
-                isDisabled={false}
                 isInvalid={false}
                 isReadOnly={false}
                 isRequired={true}>

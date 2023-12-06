@@ -54,6 +54,18 @@ export const EmployeeHome = ({ isActive, navigation }) => {
             onPress={openScanner}>
             <ButtonText>Start Scanning </ButtonText>
           </Button>
+          <Button
+            size="md"
+            mt="$10"
+            variant="solid"
+            action="positive"
+            isDisabled={false}
+            isFocusVisible={false}
+            onPress={() => {
+              navigation.navigate('TransactionHistory');
+            }}>
+            <ButtonText>Transactions History</ButtonText>
+          </Button>
         </Center>
       </ScrollView>
     </Box>
