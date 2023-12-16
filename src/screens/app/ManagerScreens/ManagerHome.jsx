@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth, useCurrentUser } from 'src/contexts/AuthProvider';
-import { StyleSheet, RefreshControl } from 'react-native';
-
+import { StyleSheet, Dimensions, View } from 'react-native';
+import Carousel from 'react-native-snap-carousel';
 import {
   Box,
   Text,
@@ -12,113 +12,80 @@ import {
   Image,
   VStack,
 } from '@gluestack-ui/themed';
-import {
-  UserCheck,
-  UserPlus,
-  UserX,
-  Plus,
-  Pencil,
-  Settings,
-  Trash,
-  X,
-} from 'lucide-react-native';
+import { User, Coins } from 'lucide-react-native';
 
 export const ManagerHome = ({ isActive, navigation }) => {
+  const slides = [0, 1];
+  const [activeSlide, setActiveSlide] = React.useState(0);
+
+  const renderItem = ({ item, index }) =>
+    item === 0 ? (
+      <Pressable
+        style={{
+          backgroundColor: 'rgba(155, 184, 205, 0.30)',
+          height: '40%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => {
+          navigation.navigate('Employee List');
+        }}>
+        <Icon as={User} size={85} />
+        <Heading mt="$3">Employee Management</Heading>
+      </Pressable>
+    ) : (
+      <Pressable
+        style={{
+          backgroundColor: 'rgba(155, 184, 205, 0.30)',
+          height: '40%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={() => {
+          navigation.navigate('Loyalty Programs');
+        }}>
+        <Icon as={Coins} size={85} />
+        <Heading mt="$3">Loyalty Programs</Heading>
+      </Pressable>
+    );
+
   const user = useCurrentUser();
   return (
     <Box style={[{ display: isActive ? 'flex' : 'none' }, styles.container]}>
       <Heading>Hello {user.first_name}!</Heading>
       <Text>Welcome to Manager's Home Screen</Text>
       <VStack style={styles.vstack}>
-        <Box
-          style={{
-            alignSelf: 'center',
-            borderWidth: 3,
-            borderRadius: 20,
-            justifyContent: 'flex-start',
-            marginBottom: '3%',
-          }}>
-          <Text
-            style={{
-              alignSelf: 'center',
-              fontWeight: 'bold',
-              fontSize: 24,
-              marginTop: '5%',
-              marginBottom: '5%',
-            }}>
-            Employee Management
-          </Text>
-          <HStack style={styles.hstack} reversed={false}>
-            <Pressable
-              style={styles.pressable}
-              onPress={() => {
-                navigation.navigate('AuthorizedEmployee');
-              }}>
-              <Icon as={UserCheck} size={35} />
-              <Text size={'sm'}>Authorized Employees</Text>
-            </Pressable>
-            <Pressable
-              style={styles.pressable}
-              onPress={() => {
-                navigation.navigate('AuthorizeNewEmployees');
-              }}>
-              <Icon as={UserPlus} size={35} />
-              <Text size={'sm'}>Authorize New Employees</Text>
-            </Pressable>
-            <Pressable
-              style={styles.pressable}
-              onPress={() => {
-                navigation.navigate('DeleteEmployee');
-              }}>
-              <Icon as={UserX} size={35} />
-              <Text size={'sm'}>Delete Employee</Text>
-            </Pressable>
-          </HStack>
-        </Box>
-        <Box
-          style={{
-            alignSelf: 'center',
-            borderWidth: 3,
-            borderRadius: 20,
-            justifyContent: 'flex-start',
-          }}>
-          <Text
-            style={{
-              alignSelf: 'center',
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: '5%',
-              marginBottom: '5%',
-            }}>
-            Loyalty Program Management
-          </Text>
-          <HStack style={styles.hstack} reversed={false}>
-            <Pressable style={styles.pressable} onPress={() => {}}>
-              <Icon as={Plus} size={35} />
-              <Text size={'sm'}>Add Loyalty Program</Text>
-            </Pressable>
-            <Pressable style={styles.pressable} onPress={() => {}}>
-              <Icon as={Pencil} size={35} />
-              <Text size={'sm'}>Update Loyalty Program</Text>
-            </Pressable>
-            <Pressable style={styles.pressable} onPress={() => {}}>
-              <Icon as={Trash} size={35} />
-              <Text size={'sm'}>Delete Loyalty Program</Text>
-            </Pressable>
-          </HStack>
-        </Box>
         <Pressable
           onPress={() => {
-            navigation.navigate('TransactionHistory');
+            navigation.navigate('Transaction History');
           }}>
           <Image
             alt="Line Chart"
             m="$3"
             w="95%"
-            size={'xl'}
+            size={'2xl'}
             source={require('src/assets/linechart.jpg')}
           />
         </Pressable>
+        <Box
+          style={{
+            // backgroundColor: 'darkgrey',
+            margin: '5%',
+          }}>
+          <Carousel
+            layout={'default'}
+            ref={carousel => (this.carousel = carousel)}
+            sliderWidth={Dimensions.get('window').width}
+            itemWidth={Dimensions.get('window').width * 0.8}
+            data={slides}
+            renderItem={renderItem}
+            onSnapToItem={index => setActiveSlide(index)}
+            inactiveSlideScale={0.8}
+            inactiveSlideOpacity={0.5}
+            firstItemOffset={20}
+            paginationDots={true}
+          />
+        </Box>
       </VStack>
     </Box>
   );
@@ -146,5 +113,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+  },
+  slide: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
   },
 });

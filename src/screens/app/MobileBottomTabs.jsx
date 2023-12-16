@@ -28,7 +28,16 @@ export const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }) => {
         {bottomTabs.map(tab => {
           return (
             <Pressable
-              style={styles.pressable}
+              style={[
+                styles.pressable,
+                {
+                  backgroundColor:
+                    (activeTab === 'Home' && tab.label === 'Home') ||
+                    (activeTab === 'Settings' && tab.label === 'Settings')
+                      ? 'rgba(155, 184, 205, 1)'
+                      : 'rgba(155, 184, 205, 0.30)',
+                },
+              ]}
               pt="$2"
               key={tab.label}
               onPress={() => {
@@ -39,12 +48,12 @@ export const MobileBottomTabs = ({ bottomTabs, activeTab, setActiveTab }) => {
                   setActiveTab(tab.label);
                 }
               }}
-              bg={
-                (activeTab === 'Home' && tab.label === 'Home') ||
-                (activeTab === 'Settings' && tab.label === 'Settings')
-                  ? '$primary300'
-                  : '$primary100'
-              }
+              // bg={
+              //   (activeTab === 'Home' && tab.label === 'Home') ||
+              //   (activeTab === 'Settings' && tab.label === 'Settings')
+              //     ? '#9BB8CD'
+              //     : '$primary100'
+              // }
               disabled={tab.disabled}
               opacity={tab.disabled ? 0.5 : 1}>
               <VStack alignItems="center">

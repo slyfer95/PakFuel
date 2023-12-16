@@ -4,11 +4,25 @@ import { useCurrentUser } from 'src/contexts/AuthProvider';
 import { supabase } from 'src/services/supabaseClient';
 import {
   Box,
-  Text,
   Spinner,
   FlatList,
   HStack,
+  Pressable,
+  Heading,
+  Image,
+  Button,
+  ButtonText,
   Divider,
+  Modal,
+  ModalBackdrop,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalBody,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  VStack,
 } from '@gluestack-ui/themed';
 
 export const TransactionHistory = () => {
@@ -16,6 +30,9 @@ export const TransactionHistory = () => {
   const [loading, setLoading] = React.useState(false);
   const user = useCurrentUser();
   const [transactionList, setTransactionList] = React.useState(null);
+  const [showReceipt, setShowReceipt] = React.useState(false);
+  const ref = React.useRef(null);
+
   React.useEffect(() => {
     user.role === 'employee'
       ? getTransactionsForRefueler()
@@ -61,21 +78,74 @@ export const TransactionHistory = () => {
           data={transactionList}
           w="95%"
           renderItem={({ item }) => (
-            <Box
-              borderTopWidth="$1"
-              borderBottomWidth="$1"
-              w="100%"
-              borderColor="$trueGray200"
-              py="$2">
-              <HStack space="md" justifyContent="space-between">
-                <Text color="$coolGray800" p="$3">
-                  {item.customer}
-                </Text>
-                <Text color="$coolGray800" p="$3">
-                  {item.amount}
-                </Text>
-              </HStack>
-            </Box>
+            <>
+              <Pressable
+                style={{ alignItems: 'center' }}
+                onPress={() => {
+                  setShowReceipt(true);
+                }}
+                w="100%"
+                borderColor="$trueGray800"
+                py="$2"
+                px="$4">
+                <Box w="100%">
+                  <HStack
+                    space="md"
+                    style={{
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}>
+                    <VStack>
+                      <Heading color="$textDark700" fontWeight="$bold">
+                        {item.customer}
+                      </Heading>
+                      <Text>
+                        {user.role === 'manager'
+                          ? item.refueler
+                          : item.created_at}
+                      </Text>
+                    </VStack>
+                    <Text color="$textDark900" fontSize={20}>
+                      {item.amount}
+                    </Text>
+                  </HStack>
+                </Box>
+                <Divider mt="$2" />
+              </Pressable>
+
+              <Modal
+                isOpen={showReceipt}
+                onClose={() => {
+                  setShowReceipt(false);
+                }}
+                finalFocusRef={ref}>
+                <ModalBackdrop />
+                <ModalContent>
+                  <ModalHeader>
+                    <Heading size="lg">Receipt</Heading>
+                  </ModalHeader>
+                  <ModalBody>
+                    <Image
+                      alt="Receipt"
+                      source={require('src/assets/receipt.jpg')}
+                      size="2xl"
+                    />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      action="secondary"
+                      mr="$3"
+                      onPress={() => {
+                        setShowReceipt(false);
+                      }}>
+                      <ButtonText>Close</ButtonText>
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
+            </>
           )}
           keyExtractor={item => item.id}
         />
@@ -83,19 +153,7 @@ export const TransactionHistory = () => {
     }
   };
 
-  return (
-    <Box style={styles.container}>
-      <HStack justifyContent="space-between" w="100%" px="$3">
-        <Text color="$coolGray800" fontWeight="$bold">
-          Customer
-        </Text>
-        <Text color="$coolGray800" fontWeight="$bold">
-          Amount
-        </Text>
-      </HStack>
-      {FragmentedScreen()}
-    </Box>
-  );
+  return <Box style={styles.container}>{FragmentedScreen()}</Box>;
 };
 
 const styles = StyleSheet.create({

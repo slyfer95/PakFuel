@@ -62,7 +62,7 @@ export const EmployeeHome = ({ isActive, navigation }) => {
             isDisabled={false}
             isFocusVisible={false}
             onPress={() => {
-              navigation.navigate('TransactionHistory');
+              navigation.navigate('Transaction History');
             }}>
             <ButtonText>Transactions History</ButtonText>
           </Button>

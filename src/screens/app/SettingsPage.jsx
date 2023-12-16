@@ -43,7 +43,7 @@ export const SettingsPage = ({ isActive, navigation }) => {
           w="$72"
           mt="$5"
           variant="solid"
-          action="primary"
+          action="secondary"
           isDisabled={false}
           isFocusVisible={false}
           onPress={handleUpdate}>
@@ -59,7 +59,7 @@ export const SettingsPage = ({ isActive, navigation }) => {
           w="$72"
           mt="$5"
           variant="solid"
-          action="primary"
+          action="negative"
           isDisabled={false}
           isFocusVisible={false}
           onPress={handleDelete}>
@@ -93,12 +93,11 @@ const styles = StyleSheet.create({
     width: '95%',
     marginBottom: '2%',
     borderRadius: 10,
-    backgroundColor: '#ADD8E6',
+    backgroundColor: 'rgba(150, 174, 190, 1)',
   },
   text: {
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
-    // backgroundColor: '#0096FF',
     fontWeight: 'bold',
     color: '#000',
   },

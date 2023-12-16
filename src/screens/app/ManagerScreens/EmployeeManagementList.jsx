@@ -5,28 +5,26 @@ import { supabase } from 'src/services/supabaseClient';
 import { Box, Text, Spinner } from '@gluestack-ui/themed';
 import { FlatListAuthorized } from 'src/components/atoms/FlatListAuthorized';
 
-export const AuthorizedEmployee = () => {
+export const EmployeeManagementList = ({ navigation }) => {
   const user = useCurrentUser();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(false);
-  const [authorizedEmployeeList, setAuthorizedEmployeeList] =
-    React.useState(null);
+  const [EmployeeList, setEmployeeList] = React.useState(null);
   React.useEffect(() => {
-    getAuthorizedEmployees();
+    getEmployees();
   }, []);
 
-  const getAuthorizedEmployees = async () => {
+  const getEmployees = async () => {
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
-      .eq('authorized', 'true')
       .eq('firm', user.firm);
     if (error) {
       setLoading(false);
       setError(true);
     } else {
       setLoading(false);
-      setAuthorizedEmployeeList(data);
+      setEmployeeList(data);
     }
   };
   const FragmentedScreen = () => {
@@ -36,8 +34,8 @@ export const AuthorizedEmployee = () => {
     if (loading) {
       return <Spinner mt="$5" size="large" />;
     }
-    if (authorizedEmployeeList) {
-      return <FlatListAuthorized data={authorizedEmployeeList} />;
+    if (EmployeeList) {
+      return <FlatListAuthorized data={EmployeeList} navigation={navigation} />;
     }
   };
 
