@@ -4,6 +4,7 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import { LoginScreen } from 'src/screens/auth/LoginScreen';
+import { SignUpScreen } from 'src/screens/auth/SignUpScreen';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -27,6 +28,7 @@ export const AuthNavigator: React.FC = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen name={'Register'} component={SignUpScreen} />
     </Stack.Navigator>
   );
 };

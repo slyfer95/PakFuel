@@ -14,7 +14,7 @@ import {
 } from '@gluestack-ui/themed';
 import { User, Coins } from 'lucide-react-native';
 
-export const ManagerHome = ({ isActive, navigation }) => {
+export const ManagerHome = ({ navigation }) => {
   const slides = [0, 1];
   const [activeSlide, setActiveSlide] = React.useState(0);
 
@@ -22,9 +22,10 @@ export const ManagerHome = ({ isActive, navigation }) => {
     item === 0 ? (
       <Pressable
         style={{
-          backgroundColor: 'rgba(155, 184, 205, 0.30)',
-          height: '40%',
+          backgroundColor: '#C1F2B0',
+          height: '65%',
           justifyContent: 'center',
+          borderRadius: 25,
           alignItems: 'center',
         }}
         onPress={() => {
@@ -36,8 +37,9 @@ export const ManagerHome = ({ isActive, navigation }) => {
     ) : (
       <Pressable
         style={{
-          backgroundColor: 'rgba(155, 184, 205, 0.30)',
-          height: '40%',
+          backgroundColor: '#C1F2B0',
+          height: '65%',
+          borderRadius: 25,
           justifyContent: 'center',
           alignItems: 'center',
         }}
@@ -51,7 +53,7 @@ export const ManagerHome = ({ isActive, navigation }) => {
 
   const user = useCurrentUser();
   return (
-    <Box style={[{ display: isActive ? 'flex' : 'none' }, styles.container]}>
+    <Box style={styles.container}>
       <Heading>Hello {user.first_name}!</Heading>
       <Text>Welcome to Manager's Home Screen</Text>
       <VStack style={styles.vstack}>
@@ -67,11 +69,7 @@ export const ManagerHome = ({ isActive, navigation }) => {
             source={require('src/assets/linechart.jpg')}
           />
         </Pressable>
-        <Box
-          style={{
-            // backgroundColor: 'darkgrey',
-            margin: '5%',
-          }}>
+        <Box alignItems="center" mt="$5" p="$5">
           <Carousel
             layout={'default'}
             ref={carousel => (this.carousel = carousel)}
@@ -94,6 +92,7 @@ export const ManagerHome = ({ isActive, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: '5%',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

@@ -1,39 +1,44 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { MobileBottomTabs } from '../MobileBottomTabs';
+import { StyleSheet } from 'react-native';
 import { EmployeeHome } from '../EmployeeScreens/EmployeeHome';
 import { SettingsPage } from '../SettingsPage';
 
-import { Box } from '@gluestack-ui/themed';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Box, Icon } from '@gluestack-ui/themed';
 import { Home, Settings } from 'lucide-react-native';
 
 export const Employee = ({ navigation }) => {
-  const [activeTab, setActiveTab] = React.useState('Home');
+  const Tab = createMaterialBottomTabNavigator();
 
-  const bottomTabs = [
-    {
-      icon: Home,
-      label: 'Home',
-    },
-    {
-      icon: Settings,
-      label: 'Settings',
-    },
-  ];
   return (
     <Box style={styles.container}>
-      <Box style={styles.scan}>
-        <EmployeeHome isActive={activeTab === 'Home'} navigation={navigation} />
-        <SettingsPage
-          navigation={navigation}
-          isActive={activeTab === 'Settings'}
+      <Tab.Navigator
+        initialRouteName="Home"
+        shifting={false}
+        sceneAnimationEnabled={false}
+        activeColor="#C1F2B0"
+        inactiveColor="#000"
+        barStyle={{ backgroundColor: '#65B741' }}>
+        <Tab.Screen
+          name={'Home'}
+          component={EmployeeHome}
+          options={{
+            tabBarIcon: ({ focused }) => {
+              return <Icon as={Home} size={25} />;
+            },
+            tabBarColor: '#000',
+          }}
         />
-      </Box>
-      <MobileBottomTabs
-        activeTab={activeTab}
-        bottomTabs={bottomTabs}
-        setActiveTab={setActiveTab}
-      />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsPage}
+          options={{
+            tabBarIcon: ({ focused }) => {
+              return <Icon as={Settings} size={25} />;
+            },
+          }}
+        />
+      </Tab.Navigator>
     </Box>
   );
 };

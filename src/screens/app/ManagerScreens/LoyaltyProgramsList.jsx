@@ -55,13 +55,13 @@ export const LoyaltyProgramsList = ({ navigation }) => {
             renderItem={({ item }) => (
               <Pressable
                 style={{ alignItems: 'center' }}
-                bgColor={'$borderDark100'}
+                bgColor={'#C1F2B0'}
                 onPress={() => {
                   navigation.navigate('Loyalty Program', { item });
                 }}
                 w="100%"
-                borderColor="$trueGray800"
-                py="$2"
+                mt="$2"
+                py="$5"
                 px="$4">
                 <HStack
                   w="100%"
@@ -89,16 +89,20 @@ export const LoyaltyProgramsList = ({ navigation }) => {
             )}
             keyExtractor={item => item.id}
           />
-          <Button
-            onPress={() => navigation.navigate('Add Loyalty Program')}
-            size="lg"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}>
-            <ButtonText>Add </ButtonText>
-            <ButtonIcon as={Plus} />
-          </Button>
+          <Pressable onPress={() => navigation.navigate('Add Loyalty Program')}>
+            <Box
+              py="$3"
+              mt="$3"
+              justifyContent="center"
+              w="100%"
+              style={{ backgroundColor: '#10b981' }}
+              flexDirection="row">
+              <ButtonText fontSize={20} fontWeight="bold">
+                Add
+              </ButtonText>
+              <ButtonIcon as={Plus} color="$borderDark50" size="lg" />
+            </Box>
+          </Pressable>
         </Box>
       );
     }

@@ -9,6 +9,7 @@ import {
   ButtonText,
   Text,
   Divider,
+  Pressable,
   Icon,
 } from '@gluestack-ui/themed';
 import { Pencil, UserX, Trash } from 'lucide-react-native';
@@ -29,71 +30,78 @@ export const SettingsPage = ({ isActive, navigation }) => {
   return (
     <Box
       style={{
-        display: isActive ? 'flex' : 'none',
         alignItems: 'center',
+        paddingTop: '5%',
         width: '100%',
         flex: 1,
       }}>
       <Box style={styles.card}>
         <Text style={styles.text}>Update Profile </Text>
         <Divider bg="$black" my="$2" />
-        <Icon as={Pencil} size="xl" />
-        <Button
-          size="md"
-          w="$72"
-          mt="$5"
-          variant="solid"
-          action="secondary"
-          isDisabled={false}
-          isFocusVisible={false}
-          onPress={handleUpdate}>
-          <ButtonText>Update</ButtonText>
-        </Button>
+        <Icon as={Pencil} size={30} />
+        <Pressable onPress={handleUpdate}>
+          <Box
+            py="$3"
+            mt="$3"
+            alignItems="center"
+            w="$72"
+            style={{
+              borderRadius: 50,
+              borderWidth: 1,
+              borderColor: '#0077E6',
+            }}>
+            <ButtonText fontSize={18} color="$primary500" fontWeight="bold">
+              Update
+            </ButtonText>
+          </Box>
+        </Pressable>
       </Box>
       <Box style={styles.card}>
         <Text style={styles.text}>Delete Profile</Text>
         <Divider bg="$black" my="$2" />
-        <Icon as={UserX} size="xl" />
-        <Button
-          size="md"
-          w="$72"
-          mt="$5"
-          variant="solid"
-          action="negative"
-          isDisabled={false}
-          isFocusVisible={false}
-          onPress={handleDelete}>
-          <ButtonText>Delete</ButtonText>
-        </Button>
+        <Icon as={UserX} size={35} />
+        <Pressable onPress={handleDelete}>
+          <Box
+            py="$3"
+            mt="$3"
+            alignItems="center"
+            w="$72"
+            style={{
+              borderRadius: 50,
+              borderWidth: 1,
+              borderColor: '#E63535',
+            }}>
+            <ButtonText fontSize={18} color="$error500" fontWeight="bold">
+              Delete
+            </ButtonText>
+          </Box>
+        </Pressable>
       </Box>
-      <Box style={styles.card}>
-        <Text style={styles.text}>Sign Out</Text>
-        <Divider bg="$black" my="$2" />
-        <Button
-          size="md"
+
+      <Pressable onPress={logout}>
+        <Box
+          py="$3"
+          mt="$3"
+          alignItems="center"
           w="$72"
-          mt="$5"
-          variant="solid"
-          action="primary"
-          isDisabled={false}
-          isFocusVisible={false}
-          onPress={logout}>
-          <ButtonText>Logout</ButtonText>
-        </Button>
-      </Box>
+          style={{ borderRadius: 50, backgroundColor: '#0077E6' }}>
+          <ButtonText fontSize={18} fontWeight="bold">
+            Logout
+          </ButtonText>
+        </Box>
+      </Pressable>
     </Box>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    flex: 0.25,
+    flex: 0.3,
     alignItems: 'center',
-    padding: '3%',
-    width: '95%',
+    paddingTop: '3%',
+    width: '100%',
     marginBottom: '2%',
-    borderRadius: 10,
-    backgroundColor: 'rgba(150, 174, 190, 1)',
+    backgroundColor: 'rgba(150, 174, 190, 0.2)',
   },
   text: {
     borderTopRightRadius: 10,

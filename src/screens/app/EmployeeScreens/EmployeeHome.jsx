@@ -32,7 +32,7 @@ export const EmployeeHome = ({ isActive, navigation }) => {
   return (
     <Box
       style={{
-        display: isActive ? 'flex' : 'none',
+        flex: 1,
       }}>
       <ScrollView
         refreshControl={
@@ -85,6 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '50%',
+    marginTop: '30%',
   },
 });

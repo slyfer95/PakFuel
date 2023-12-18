@@ -1,31 +1,37 @@
 import { React, useState, useCallback } from 'react';
 import { useAuth } from 'src/contexts/AuthProvider';
-import { StyleSheet, RefreshControl, Alert } from 'react-native';
+import {
+  StyleSheet,
+  RefreshControl,
+  Alert,
+  ImageBackground,
+} from 'react-native';
+import { Eye, EyeOff, Mail } from 'lucide-react-native';
 
 import {
   Box,
   VStack,
-  FormControl,
-  FormControlLabel,
-  FormControlLabelText,
   Image,
   Input,
   InputField,
+  InputSlot,
+  InputIcon,
   Button,
   ButtonText,
   Divider,
   ScrollView,
+  Pressable,
   Text,
   Link,
   LinkText,
+  ButtonSpinner,
   HStack,
-  Spinner,
 } from '@gluestack-ui/themed';
 
-export const LoginScreen = () => {
-  const { loginWithEmailAndPassword, registerWithEmailAndPassword, loading } =
-    useAuth();
+export const LoginScreen = ({ navigation }) => {
+  const { loginWithEmailAndPassword, loading } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
+  const [show, setShow] = useState(false);
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
@@ -37,24 +43,6 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [signup, setSignUp] = useState(false);
-
-  const handleFragment = flag => {
-    if (flag) {
-      setSignUp(true);
-    } else {
-      setSignUp(false);
-    }
-  };
-
-  const handleSignUp = async () => {
-    try {
-      registerWithEmailAndPassword(email, password);
-    } catch (error) {
-      Alert.alert(`Error: ${error}`);
-    }
-  };
-
   const handleLogin = async () => {
     try {
       await loginWithEmailAndPassword(email, password);
@@ -63,154 +51,98 @@ export const LoginScreen = () => {
     }
   };
 
-  const SignUpFragment = () => {
-    if (loading) {
-      return <Spinner mt="$25" size="large" />;
-    }
-
-    if (signup) {
-      return (
-        <ScrollView h="$80" w="$72">
-          <VStack style={styles.vstack} space="sm" reversed={false}>
-            {/* Email */}
-            <Box w="$72">
-              <FormControl
-                size="md"
+  return (
+    <Box style={styles.container}>
+      <ImageBackground
+        source={require('src/assets/background.png')}
+        resizeMode="cover"
+        style={{ flex: 1, width: '100%', alignItems: 'center' }}>
+        <ScrollView
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }>
+          <Image
+            alt="Logo"
+            size={'2xl'}
+            source={require('src/assets/logo.png')}
+          />
+          <Box mt="$10" style={styles.login}>
+            <VStack style={styles.vstack} space="sm" reversed={false}>
+              <Input
+                variant="underlined"
+                size="xl"
+                mb="$5"
                 isDisabled={false}
                 isInvalid={false}
                 isReadOnly={false}
                 isRequired={true}>
-                <FormControlLabel mb="$2">
-                  <FormControlLabelText>Email</FormControlLabelText>
-                </FormControlLabel>
-                <Input>
-                  <InputField
-                    type="email"
-                    onChangeText={text => setEmail(text)}
-                    placeholder="Enter your Email Address!"
-                  />
-                </Input>
-              </FormControl>
-            </Box>
-            {/* Password */}
-            <Box w="$72">
-              <FormControl
-                size="md"
-                isDisabled={false}
-                isInvalid={false}
-                isReadOnly={false}
-                isRequired={true}>
-                <FormControlLabel mb="$1">
-                  <FormControlLabelText>Password</FormControlLabelText>
-                </FormControlLabel>
-                <Input>
-                  <InputField
-                    type="password"
-                    onChangeText={text => setPassword(text)}
-                    placeholder="Enter Password"
-                  />
-                </Input>
-              </FormControl>
-            </Box>
-            {/* SignUp */}
-            <Box w="$72" style={styles.login}>
-              <Button
-                size="md"
-                variant="solid"
-                action="primary"
-                isDisabled={false}
-                isFocusVisible={false}
-                onPress={handleSignUp}>
-                <ButtonText>Sign Up</ButtonText>
-              </Button>
-              <Divider my="$2" />
-            </Box>
-            <HStack w="$72">
-              <Text size="sm">Already have an account? </Text>
-              <Link onPress={() => handleFragment(false)}>
-                <LinkText size="sm">Login!</LinkText>
-              </Link>
-            </HStack>
-          </VStack>
-        </ScrollView>
-      );
-    } else {
-      return (
-        <VStack style={styles.vstack} space="sm" reversed={false}>
-          <Box w="$72">
-            <FormControl
-              size="md"
-              isDisabled={false}
-              isInvalid={false}
-              isReadOnly={false}
-              isRequired={true}>
-              <FormControlLabel mb="$2">
-                <FormControlLabelText>Email</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
+                <InputSlot mr="$3">
+                  <InputIcon as={Mail} />
+                </InputSlot>
                 <InputField
                   onChangeText={text => setEmail(text)}
                   type="email"
-                  placeholder="Enter your Email!"
+                  placeholder="Enter Email"
                 />
               </Input>
-            </FormControl>
-          </Box>
-          <Box w="$72">
-            <FormControl
-              size="md"
-              isDisabled={false}
-              isInvalid={false}
-              isReadOnly={false}
-              isRequired={true}>
-              <FormControlLabel mb="$1">
-                <FormControlLabelText>Password</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
+              <Input
+                variant="underlined"
+                size="xl"
+                mb="$5"
+                isDisabled={false}
+                isInvalid={false}
+                isReadOnly={false}
+                isRequired={true}>
                 <InputField
-                  type="password"
                   onChangeText={text => setPassword(text)}
+                  type={show ? 'text' : 'password'}
                   placeholder="Enter Password"
                 />
+                <InputSlot>
+                  {show ? (
+                    <Pressable
+                      onPress={() => {
+                        setShow(false);
+                      }}>
+                      <InputIcon as={EyeOff} />
+                    </Pressable>
+                  ) : (
+                    <Pressable
+                      onPress={() => {
+                        setShow(true);
+                      }}>
+                      <InputIcon as={Eye} />
+                    </Pressable>
+                  )}
+                </InputSlot>
               </Input>
-            </FormControl>
+              <Pressable onPress={handleLogin}>
+                <Box
+                  py="$3"
+                  mt="$3"
+                  alignItems="center"
+                  w="$72"
+                  style={{ borderRadius: 50, backgroundColor: '#10b981' }}>
+                  {loading ? (
+                    <ButtonSpinner mr="$1" />
+                  ) : (
+                    <ButtonText fontSize={20} fontWeight="bold">
+                      Login
+                    </ButtonText>
+                  )}
+                </Box>
+              </Pressable>
+              <Divider my="$5" />
+              <HStack w="$72">
+                <Text size="md">Don't have an account? </Text>
+                <Link onPress={() => navigation.navigate('Register')}>
+                  <LinkText size="md">Sign Up!</LinkText>
+                </Link>
+              </HStack>
+            </VStack>
           </Box>
-          <Box w="$72" style={styles.login}>
-            <Button
-              size="md"
-              variant="solid"
-              action="primary"
-              isDisabled={false}
-              isFocusVisible={false}
-              onPress={handleLogin}>
-              <ButtonText>Login </ButtonText>
-            </Button>
-            <Divider my="$2" />
-          </Box>
-          <HStack w="$72">
-            <Text size="sm">Don't have an account? </Text>
-            <Link onPress={() => handleFragment(true)}>
-              <LinkText size="sm">Sign Up!</LinkText>
-            </Link>
-          </HStack>
-        </VStack>
-      );
-    }
-  };
-
-  return (
-    <Box style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
-        <Image
-          alt="Logo"
-          size={'2xl'}
-          source={require('src/assets/logo.png')}
-        />
-        <Box style={styles.signup}>{SignUpFragment()}</Box>
-      </ScrollView>
+        </ScrollView>
+      </ImageBackground>
     </Box>
   );
 };
@@ -220,9 +152,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
-  signup: {
+  login: {
     flex: 1,
+  },
+  image: {
+    justifyContent: 'center',
   },
   vstack: {
     alignItems: 'center',

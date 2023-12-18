@@ -40,7 +40,7 @@ const styles = (theme: Theme) =>
   StyleSheet.create({
     layoutAndroid: {
       flex: 1,
-      paddingTop: 25,
+
       backgroundColor: theme.colors.mainBackground,
     },
     layoutIOS: {
