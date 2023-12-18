@@ -12,7 +12,7 @@ import {
   Pressable,
   Icon,
 } from '@gluestack-ui/themed';
-import { Pencil, UserX, Trash } from 'lucide-react-native';
+import { Pencil, UserX } from 'lucide-react-native';
 
 export const SettingsPage = ({ isActive, navigation }) => {
   const { logout } = useAuth();

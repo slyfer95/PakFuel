@@ -16,6 +16,7 @@ import {
   Divider,
   Text,
   Heading,
+  Pressable,
   Spinner,
   Select,
   SelectTrigger,
@@ -133,15 +134,19 @@ export const AddProgram = ({ navigation }) => {
         </Box>
 
         <Box w="$72" style={styles.login}>
-          <Button
-            size="md"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}
-            onPress={() => Alert.alert('Are you sure you want to update?')}>
-            <ButtonText>Add Program</ButtonText>
-          </Button>
+          <Pressable
+            onPress={() => Alert.alert('Are you sure you want to add?')}>
+            <Box
+              py="$3"
+              mt="$3"
+              alignItems="center"
+              w="$72"
+              style={{ borderRadius: 50, backgroundColor: '#10b981' }}>
+              <ButtonText fontSize={20} fontWeight="bold">
+                Add Program
+              </ButtonText>
+            </Box>
+          </Pressable>
         </Box>
       </VStack>
     </Box>

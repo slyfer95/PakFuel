@@ -16,6 +16,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalHeader,
+  Pressable,
   ModalOverlay,
   Text,
 } from '@gluestack-ui/themed';
@@ -28,21 +29,39 @@ export const EmployeeManagement = ({ route }) => {
 
   const authorityButtons = () => {
     return item.authorized === true ? (
-      <Button
-        mt="$5"
-        variant="outline"
-        action="negative"
-        onPress={() => setShowAuthorityModal(true)}>
-        <ButtonText>Unauthorize this User</ButtonText>
-      </Button>
+      <Pressable onPress={() => setShowAuthorityModal(true)}>
+        <Box
+          py="$3"
+          mt="$3"
+          alignItems="center"
+          w="$72"
+          style={{
+            borderRadius: 50,
+            borderWidth: 1,
+            borderColor: '#E63535',
+          }}>
+          <ButtonText fontSize={18} color="$error500" fontWeight="bold">
+            Unauthorize this User
+          </ButtonText>
+        </Box>
+      </Pressable>
     ) : (
-      <Button
-        mt="$5"
-        variant="outline"
-        action="positive"
-        onPress={() => setShowAuthorityModal(true)}>
-        <ButtonText>Authorize this User</ButtonText>
-      </Button>
+      <Pressable onPress={() => setShowAuthorityModal(true)}>
+        <Box
+          py="$3"
+          mt="$3"
+          alignItems="center"
+          w="$72"
+          style={{
+            borderRadius: 50,
+            borderWidth: 1,
+            borderColor: '#10b981',
+          }}>
+          <ButtonText fontSize={18} color="$success500" fontWeight="bold">
+            Authorize this User
+          </ButtonText>
+        </Box>
+      </Pressable>
     );
   };
 
@@ -66,13 +85,19 @@ export const EmployeeManagement = ({ route }) => {
         <Divider mt="$2" />
         {authorityButtons()}
         <Divider mt="$2" />
-        <Button
-          mt="$5"
-          variant="solid"
-          action="negative"
-          onPress={() => setShowDeleteModal(true)}>
-          <ButtonText>Delete this User</ButtonText>
-        </Button>
+        <Pressable onPress={() => setShowDeleteModal(true)}>
+          <Box
+            py="$3"
+            mt="$3"
+            alignItems="center"
+            w="$72"
+            style={{ borderRadius: 50, backgroundColor: '#E63535' }}>
+            <ButtonText fontSize={20} fontWeight="bold">
+              Delete
+            </ButtonText>
+          </Box>
+        </Pressable>
+
         <Modal
           isOpen={showDeleteModal}
           onClose={() => {

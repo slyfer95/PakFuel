@@ -10595,6 +10595,16 @@ react-native-gesture-handler@^2.14.0:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-gifted-charts@^1.3.27:
+  version "1.3.27"
+  resolved "https://registry.yarnpkg.com/react-native-gifted-charts/-/react-native-gifted-charts-1.3.27.tgz#8d45c92c8942adee9668a33b043fc58f3410d01d"
+  integrity sha512-7VgApaR8z28DVc/lQ7Rx4uTfYh1kjFZyAfVdldUU4nAIic0Hbi+4iaC3f17KMX1j/DY7C3iC/u6L0cT/sQeKEQ==
+
+react-native-linear-gradient@^2.8.3:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.8.3.tgz#9a116649f86d74747304ee13db325e20b21e564f"
+  integrity sha512-KflAXZcEg54PXkLyflaSZQ3PJp4uC4whM7nT/Uot9m0e/qxFV3p6uor1983D1YOBJbJN7rrWdqIjq0T42jOJyA==
+
 react-native-paper@^5.11.4:
   version "5.11.4"
   resolved "https://registry.yarnpkg.com/react-native-paper/-/react-native-paper-5.11.4.tgz#db4c69ebd25324acb21258bbbe472dd1670ce3e6"
@@ -10635,10 +10645,10 @@ react-native-snap-carousel@^3.9.1:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
 
-react-native-svg@13.9.0:
-  version "13.9.0"
-  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
-  integrity sha512-Ey18POH0dA0ob/QiwCBVrxIiwflhYuw0P0hBlOHeY4J5cdbs8ngdKHeWC/Kt9+ryP6fNoEQ1PUgPYw2Bs/rp5Q==
+react-native-svg@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-14.1.0.tgz#7903bddd3c71bf3a8a503918253c839e6edaa724"
+  integrity sha512-HeseElmEk+AXGwFZl3h56s0LtYD9HyGdrpg8yd9QM26X+d7kjETrRQ9vCjtxuT5dCZEIQ5uggU1dQhzasnsCWA==
   dependencies:
     css-select "^5.1.0"
     css-tree "^1.1.3"

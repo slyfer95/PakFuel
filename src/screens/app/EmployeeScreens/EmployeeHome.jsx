@@ -9,6 +9,7 @@ import {
   Heading,
   Icon,
   Center,
+  Pressable,
   Button,
   ButtonText,
 } from '@gluestack-ui/themed';
@@ -44,28 +45,34 @@ export const EmployeeHome = ({ isActive, navigation }) => {
         </Box>
         <Center style={styles.noscan}>
           <Icon as={ScanLine} size={250} />
-          <Button
-            size="md"
-            mt="$10"
-            variant="solid"
-            action="primary"
-            isDisabled={false}
-            isFocusVisible={false}
-            onPress={openScanner}>
-            <ButtonText>Start Scanning </ButtonText>
-          </Button>
-          <Button
-            size="md"
-            mt="$10"
-            variant="solid"
-            action="positive"
-            isDisabled={false}
-            isFocusVisible={false}
+          <Pressable onPress={openScanner}>
+            <Box
+              py="$3"
+              mt="$3"
+              alignItems="center"
+              w="$72"
+              style={{ borderRadius: 50, backgroundColor: '#0077E6' }}>
+              <ButtonText fontSize={18} fontWeight="bold">
+                Start Scanning
+              </ButtonText>
+            </Box>
+          </Pressable>
+
+          <Pressable
             onPress={() => {
               navigation.navigate('Transaction History');
             }}>
-            <ButtonText>Transactions History</ButtonText>
-          </Button>
+            <Box
+              py="$3"
+              mt="$3"
+              alignItems="center"
+              w="$72"
+              style={{ borderRadius: 50, backgroundColor: '#10b981' }}>
+              <ButtonText fontSize={18} fontWeight="bold">
+                Transactions History
+              </ButtonText>
+            </Box>
+          </Pressable>
         </Center>
       </ScrollView>
     </Box>

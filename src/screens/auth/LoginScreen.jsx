@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
-    // backgroundColor: 'red',
   },
   login: {
     flex: 1,

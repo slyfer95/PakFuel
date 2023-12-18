@@ -26,6 +26,7 @@ import {
   SelectDragIndicatorWrapper,
   SelectDragIndicator,
   SelectItem,
+  Pressable,
   SelectIcon,
   Icon,
 } from '@gluestack-ui/themed';
@@ -134,27 +135,47 @@ export const LoyaltyManagement = ({ route }) => {
         </Box>
 
         <Box w="$72" style={styles.login}>
-          <Button
-            size="md"
-            variant="outline"
-            action="negative"
-            isDisabled={false}
-            isFocusVisible={false}
+          <Pressable
             onPress={() => Alert.alert('Are you sure you want to delete?')}>
-            <ButtonText>Delete</ButtonText>
-          </Button>
+            <Box
+              py="$3"
+              mt="$3"
+              alignItems="center"
+              w="$72"
+              style={{
+                borderRadius: 50,
+                borderWidth: 1,
+                borderColor: '#E63535',
+              }}>
+              <ButtonText fontSize={18} color="$error500" fontWeight="bold">
+                Delete
+              </ButtonText>
+            </Box>
+          </Pressable>
         </Box>
-
         <Box w="$72" style={styles.login}>
-          <Button
+          <Pressable
+            onPress={() => Alert.alert('Are you sure you want to update?')}>
+            <Box
+              py="$3"
+              mt="$3"
+              alignItems="center"
+              w="$72"
+              style={{ borderRadius: 50, backgroundColor: '#0077E6' }}>
+              <ButtonText fontSize={18} fontWeight="bold">
+                Update
+              </ButtonText>
+            </Box>
+          </Pressable>
+          {/* <Button
             size="md"
             variant="solid"
             action="primary"
             isDisabled={false}
             isFocusVisible={false}
-            onPress={() => Alert.alert('Are you sure you want to update?')}>
+            onPress={}>
             <ButtonText>Update</ButtonText>
-          </Button>
+          </Button> */}
         </Box>
       </VStack>
     </Box>
